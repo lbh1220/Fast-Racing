@@ -16,5 +16,7 @@ include_directories(
     set(PROJECT_CPP ${PROJECT_NAME}_sources)
     file(GLOB_RECURSE PROJECT_CPP "${AIRSIM_ROOT}/MavLinkCom/${PROJECT_NAME}/*.cpp")
     add_executable(${PROJECT_NAME} ${PROJECT_CPP})
-			
+    # Enforce C++17 at target level to avoid being overridden upstream
+    set_target_properties(${PROJECT_NAME} PROPERTIES CXX_STANDARD 17 CXX_STANDARD_REQUIRED YES CXX_EXTENSIONS NO)
+    target_compile_features(${PROJECT_NAME} PRIVATE cxx_std_17)	
 target_link_libraries(${PROJECT_NAME} ${CMAKE_THREAD_LIBS_INIT} MavLinkCom ${CXX_EXP_LIB})
